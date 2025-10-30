@@ -1,0 +1,157 @@
+{
+"Apple Scab": {
+"description": "Fungal disease causing olive-green or black spots on leaves and fruits, leading to cracking and defoliation. Not directly a nutrient deficiency, but weakened plants from low potassium or calcium are more susceptible.",
+"nutrient_deficiency": "Low potassium or calcium can increase susceptibility by weakening plant defenses.",
+"solutions": "Apply fungicides (e.g., captan) in early spring. Rake and destroy fallen leaves. Prune for air circulation. Supplement with potassium-rich fertilizer if soil test shows deficiency. Organic option: Neem oil sprays."
+},
+"Black Rot": {
+"description": "Fungal infection causing black rotting spots on fruits, leaves, and stems. Can be exacerbated by nutrient imbalances like low calcium, leading to poor plant vigor.",
+"nutrient_deficiency": "Low calcium reduces cell wall strength, making plants more vulnerable.",
+"solutions": "Prune infected parts and apply fungicides. Ensure good drainage. Rotate crops. Use calcium foliar sprays if deficiency suspected. Organic option: Compost tea for overall health."
+},
+"Cedar Apple Rust": {
+"description": "Fungal disease with yellow-orange spots on leaves and galls on branches. Nutrient deficiencies like iron or manganese can weaken resistance.",
+"nutrient_deficiency": "Iron or manganese deficiency leads to chlorosis, reducing overall plant health.",
+"solutions": "Remove nearby cedar trees (alternate host). Apply fungicides in spring. Use resistant varieties. Correct soil pH for better nutrient uptake. Organic option: Garlic-based sprays."
+},
+"Healthy": {
+"description": "No visible disease; plant appears normal. Monitor for potential nutrient deficiencies if growth is stunted.",
+"nutrient_deficiency": "General: Check for NPK imbalances if symptoms appear later.",
+"solutions": "Maintain balanced fertilization. Regular soil tests for NPK levels. Preventative care like proper watering and spacing. Organic option: Mulch with compost."
+},
+"Powdery Mildew": {
+"description": "White powdery fungal growth on leaves, stems, and fruits. Often worsened by sulfur or potassium deficiencies.",
+"nutrient_deficiency": "Low potassium reduces disease resistance; sulfur deficiency in soil can mimic or exacerbate.",
+"solutions": "Apply sulfur-based fungicides. Improve air flow. Water at base. Use potassium bicarbonate sprays. Organic option: Baking soda solution (1 tbsp per gallon water)."
+},
+"Cercospora Leaf Spot Gray Leaf Spot": {
+"description": "Fungal spots with gray centers on leaves, causing defoliation. Often worsened by potassium deficiency, leading to weak cell walls.",
+"nutrient_deficiency": "Potassium deficiency weakens leaf tissues.",
+"solutions": "Apply fungicides. Improve air circulation. Avoid overhead watering. Add potassium sulfate if soil deficient. Organic option: Copper soap sprays."
+},
+"Common Rust": {
+"description": "Fungal orange pustules on leaves and stems. High humidity and low potassium can increase susceptibility.",
+"nutrient_deficiency": "Low potassium impairs plant immunity.",
+"solutions": "Use resistant varieties. Apply fungicides early. Remove infected leaves. Boost potassium with fertilizer. Organic option: Neem oil for prevention."
+},
+"Northern Leaf Blight": {
+"description": "Fungal long gray-green lesions on leaves. Nutrient deficiencies like nitrogen can reduce plant resistance.",
+"nutrient_deficiency": "Nitrogen deficiency causes poor growth and higher vulnerability.",
+"solutions": "Crop rotation. Fungicide application. Destroy residue. Apply nitrogen-rich fertilizer if deficient. Organic option: Legume cover crops for nitrogen fixation."
+},
+"Leaf Blight (Isariopsis Leaf Spot)": {
+"description": "Fungal purple spots on leaves, causing defoliation. Low potassium weakens plants.",
+"nutrient_deficiency": "Potassium deficiency reduces resistance.",
+"solutions": "Fungicide sprays. Remove infected leaves. Proper spacing. Potassium fertilization. Organic option: Horsetail tea sprays."
+},
+"Huanglongbing (Citrus Greening)": {
+"description": "Bacterial disease with yellow mottled leaves and misshapen fruits. Zinc, iron, or manganese deficiencies mimic symptoms.",
+"nutrient_deficiency": "Micronutrient deficiencies (zinc, iron, manganese) cause similar yellowing.",
+"solutions": "Remove infected trees. Control psyllids with insecticides. Use chelated micronutrients for deficiencies. Organic option: Beneficial insects for psyllid control."
+},
+"Bacterial Spot": {
+"description": "Bacterial dark water-soaked spots on leaves/fruits. Copper deficiency can increase vulnerability.",
+"nutrient_deficiency": "Low copper reduces natural antibacterial defenses.",
+"solutions": "Copper bactericides. Avoid wet foliage. Rotate crops. Supplement copper if soil test indicates low levels. Organic option: Serenade biofungicide."
+},
+"Early Blight": {
+"description": "Fungal brown spots with rings on leaves. Calcium deficiency (e.g., blossom end rot) often co-occurs.",
+"nutrient_deficiency": "Calcium deficiency weakens tissues.",
+"solutions": "Fungicides like copper. Crop rotation. Mulch soil. Calcium sprays for deficiency. Organic option: Crushed eggshells for calcium."
+},
+"Late Blight": {
+"description": "Fungal water-soaked lesions with white mold. Poor nutrition like low nitrogen reduces resistance.",
+"nutrient_deficiency": "Nitrogen deficiency stunts growth and immunity.",
+"solutions": "Resistant varieties. Preventive fungicides. Destroy infected plants. Balanced NPK fertilizer. Organic option: Copper sulfate sprays."
+},
+"Leaf Mold": {
+"description": "Fungal yellow spots on upper leaves, mold below. High humidity; low calcium affects.",
+"nutrient_deficiency": "Calcium deficiency can weaken leaves.",
+"solutions": "Improve ventilation. Fungicides. Prune leaves. Calcium amendments. Organic option: Milk spray for suppression."
+},
+"Septoria Leaf Spot": {
+"description": "Small dark spots with yellow halos on leaves. Potassium deficiency weakens defenses.",
+"nutrient_deficiency": "Low potassium.",
+"solutions": "Fungicides. Crop rotation. Remove lower infected leaves. Potassium fertilizer. Organic option: Seaweed extract for potassium."
+},
+"Spider Mites Two-Spotted Spider Mite": {
+"description": "Pest causing stippled yellow leaves and webbing. Low humidity; phosphorus deficiency stresses plants.",
+"nutrient_deficiency": "Phosphorus deficiency reduces vigor.",
+"solutions": "Miticide sprays. Predatory mites. Increase humidity. Phosphorus supplements. Organic option: Insecticidal soap."
+},
+"Target Spot": {
+"description": "Concentric ring spots on leaves. Similar to early blight; calcium deficiency co-factor.",
+"nutrient_deficiency": "Low calcium.",
+"solutions": "Fungicides. Air circulation. Avoid wetting leaves. Calcium foliar sprays. Organic option: Bone meal for calcium."
+},
+"Tomato Mosaic Virus": {
+"description": "Viral mottled leaves and stunted growth. No direct cure; nutrient balance helps resilience.",
+"nutrient_deficiency": "General imbalances weaken plants.",
+"solutions": "Disinfect tools. Virus-free seeds. Remove infected plants. Balanced fertilizer. Organic option: Companion planting with marigolds."
+},
+"Tomato Yellow Leaf Curl Virus": {
+"description": "Viral curling yellow leaves. Whitefly-transmitted; zinc deficiency mimics.",
+"nutrient_deficiency": "Zinc deficiency causes similar symptoms.",
+"solutions": "Control whiteflies. Resistant varieties. Remove plants. Zinc sulfate if deficient. Organic option: Sticky traps for whiteflies."
+},
+"Leaf Scorch": {
+"description": "Brown, dry edges on leaves from stress or nutrient issues.",
+"nutrient_deficiency": "Often potassium or magnesium deficiency.",
+"solutions": "Deep watering. Mulch. Test soil; add potassium sulfate or Epsom salt. Organic option: Banana peel mulch for potassium."
+},
+"Esca (Black Measles)": {
+"description": "Fungal disease with dark streaks in wood and leaf tiger-striping. Poor soil nutrition, especially low magnesium, can contribute.",
+"nutrient_deficiency": "Low magnesium affects vascular health.",
+"solutions": "Prune infected wood. Use biofungicides. Improve soil with magnesium amendments like Epsom salt. Organic option: Trichoderma-based products."
+},
+"Nitrogen Deficiency": {
+"description": "Yellowing of older leaves, stunted growth.",
+"nutrient_deficiency": "Lack of nitrogen.",
+"solutions": "Apply nitrogen-rich fertilizer like urea. Use compost or manure. Test soil pH. Organic option: Blood meal or fish emulsion."
+},
+"Phosphorus Deficiency": {
+"description": "Purple or dark green leaves, delayed maturity.",
+"nutrient_deficiency": "Lack of phosphorus.",
+"solutions": "Add phosphorus fertilizer like superphosphate. Ensure soil pH 6-7. Use bone meal. Organic option: Rock phosphate."
+},
+"Potassium Deficiency": {
+"description": "Brown scorching on leaf edges, weak stems.",
+"nutrient_deficiency": "Lack of potassium.",
+"solutions": "Apply potash fertilizer like potassium sulfate. Mulch with potassium-rich materials. Organic option: Wood ash or kelp meal."
+},
+"Calcium Deficiency": {
+"description": "Blossom end rot, distorted new growth.",
+"nutrient_deficiency": "Lack of calcium.",
+"solutions": "Add lime or gypsum to soil. Maintain consistent watering. Foliar calcium sprays. Organic option: Eggshell powder."
+},
+"Magnesium Deficiency": {
+"description": "Interveinal yellowing on older leaves.",
+"nutrient_deficiency": "Lack of magnesium.",
+"solutions": "Apply Epsom salt (magnesium sulfate). Dolomitic lime for soil amendment. Organic option: Composted leaves."
+},
+"Iron Deficiency": {
+"description": "Yellowing between veins on young leaves.",
+"nutrient_deficiency": "Lack of iron.",
+"solutions": "Use chelated iron fertilizers. Lower soil pH with sulfur if alkaline. Organic option: Iron-rich compost."
+},
+"Manganese Deficiency": {
+"description": "Interveinal chlorosis on young leaves.",
+"nutrient_deficiency": "Lack of manganese.",
+"solutions": "Foliar spray manganese sulfate. Lower soil pH if alkaline. Organic option: Pine needle mulch to acidify soil."
+},
+"Zinc Deficiency": {
+"description": "Stunted growth, bronzed leaves.",
+"nutrient_deficiency": "Lack of zinc.",
+"solutions": "Apply zinc sulfate. Chelated zinc for foliar spray. Organic option: Zinc-enriched compost."
+},
+"Heart Rot": {
+"description": "Rotting at the center of the plant.",
+"nutrient_deficiency": "Often boron deficiency.",
+"solutions": "Improve drainage. Apply boron if deficient. Fungicides for fungal causes. Organic option: Borax in small doses."
+},
+"Unknown Issue": {
+"description": "Unable to identify; may be environmental stress or mixed symptoms.",
+"nutrient_deficiency": "Possible general deficiency—test soil.",
+"solutions": "Soil test for nutrients. Consult expert. Monitor watering/light. Organic option: General compost application."
+}
+}
