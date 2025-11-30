@@ -237,7 +237,8 @@ def compute_seasonal_success(recommendations):
 def compute_regional_popularity(recommendations):
     return [{'crop': rec['name'].title(), 'yield': rec['state_yield']} for rec in recommendations if rec.get('state_yield', 0) > 0]
 
-@app.route('/health')
+# Simple readiness probe that does not collide with UI routes
+@app.route('/healthz')
 def health_check():
     return jsonify({"status": "ok"})
 
@@ -530,4 +531,6 @@ def predict_disease(img_path):
         return "Unknown Issue"
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=7860, debug=False)
+    port = int(os.environ.get("PORT", 7860))
+    debug = os.environ.get("FLASK_DEBUG", "False").lower() == "true"
+    app.run(host='0.0.0.0', port=port, debug=debug)
