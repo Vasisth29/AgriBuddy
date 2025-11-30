@@ -1,6 +1,9 @@
 import pandas as pd
 import os
 
+# Get base directory (where utils.py is located, same as app.py)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Global variables for lazy loading
 _soil_df = None
 _crop_df = None
@@ -45,7 +48,7 @@ def _load_soil_df():
     global _soil_df
     if _soil_df is None:
         try:
-            _soil_df = pd.read_excel('soil_nutrient_data.xlsx', engine='openpyxl')
+            _soil_df = pd.read_excel(os.path.join(BASE_DIR, 'soil_nutrient_data.xlsx'), engine='openpyxl')
             _soil_df.columns = _soil_df.columns.str.strip()
             print("Loaded: soil_nutrient_data.xlsx")
         except Exception as e:
@@ -57,7 +60,7 @@ def _load_crop_df():
     global _crop_df
     if _crop_df is None:
         try:
-            _crop_df = pd.read_csv('Crop_recommendation.csv')
+            _crop_df = pd.read_csv(os.path.join(BASE_DIR, 'Crop_recommendation.csv'))
             _crop_df.columns = _crop_df.columns.str.strip()
             print("Loaded: Crop_recommendation.csv")
         except Exception as e:
@@ -69,7 +72,7 @@ def _load_production_df():
     global _production_df
     if _production_df is None:
         try:
-            _production_df = pd.read_csv('crop_production.csv')
+            _production_df = pd.read_csv(os.path.join(BASE_DIR, 'crop_production.csv'))
             _production_df.columns = _production_df.columns.str.strip()
             print("Loaded: crop_production.csv")
         except Exception as e:
@@ -81,7 +84,7 @@ def _load_climate_df():
     global _climate_df
     if _climate_df is None:
         try:
-            _climate_df = pd.read_csv('state_climate.csv')
+            _climate_df = pd.read_csv(os.path.join(BASE_DIR, 'state_climate.csv'))
             _climate_df.columns = _climate_df.columns.str.strip()
             print("Loaded: state_climate.csv")
         except Exception as e:

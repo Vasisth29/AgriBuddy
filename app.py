@@ -11,21 +11,31 @@ import cv2
 import tensorflow as tf
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'Uploads'
+
+# Get the base directory (where app.py is located)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+app.config['UPLOAD_FOLDER'] = os.path.join(BASE_DIR, 'Uploads')
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 # --- LOAD MODELS AND INDICES AT STARTUP ---
 print("TensorFlow version:", tf.__version__)
+print(f"Base directory: {BASE_DIR}")
 print("Attempting to load soil model and indices...")
 try:
-    soil_model = load_model('models/soil_model.h5')
+    model_path = os.path.join(BASE_DIR, 'models', 'soil_model.h5')
+    indices_path = os.path.join(BASE_DIR, 'models', 'class_indices.json')
+    print(f"Loading model from: {model_path}")
+    print(f"Model file exists: {os.path.exists(model_path)}")
+    soil_model = load_model(model_path)
     print("Soil model loaded successfully.")
-    with open('models/class_indices.json', 'r') as f:
+    with open(indices_path, 'r') as f:
         soil_class_indices = json.load(f)
         soil_class_names = {v: k for k, v in soil_class_indices.items()}
     print("Soil class indices loaded successfully.")
 except Exception as e:
     print(f"CRITICAL ERROR: Failed to load soil model or class indices: {e}")
+    import traceback
+    traceback.print_exc()
     soil_model, soil_class_names = None, {}
 
 # Global variables for lazy loading disease model
@@ -34,7 +44,7 @@ disease_class_names = None
 
 # Load rainfall data
 try:
-    df = pd.read_csv("Sub_Division_IMD_2017.csv")
+    df = pd.read_csv(os.path.join(BASE_DIR, "Sub_Division_IMD_2017.csv"))
     df.columns = df.columns.str.strip()
     month_columns = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
     df_melted = df.melt(id_vars=["SUBDIVISION", "YEAR"], var_name="MONTH", value_name="RAINFALL")
@@ -106,14 +116,21 @@ STATES_FOR_DROPDOWN = [
 
 # Load merged_df
 try:
-    merged_df = pd.read_csv("merged_crop_data.csv")
+    merged_df = pd.read_csv(os.path.join(BASE_DIR, "merged_crop_data.csv"))
     merged_df.columns = merged_df.columns.str.strip()
     print("Merged data loaded successfully.")
 except Exception as e:
     print(f"Warning: Failed to load merged_crop_data.csv: {e}")
     merged_df = pd.DataFrame()
 
-static_files = [f.lower() for f in os.listdir("static/crop_images") if f.endswith('.jpg')] if os.path.exists("static/crop_images") else []
+# Get static files list with absolute path
+static_images_dir = os.path.join(BASE_DIR, 'static', 'crop_images')
+static_files = []
+if os.path.exists(static_images_dir):
+    static_files = [f.lower() for f in os.listdir(static_images_dir) if f.endswith('.jpg')]
+    print(f"Found {len(static_files)} crop images in {static_images_dir}")
+else:
+    print(f"WARNING: Static images directory not found: {static_images_dir}")
 
 # Subdivision to state mapping
 subdivision_to_state = {
@@ -165,7 +182,8 @@ default_crops = {
 
 # Load custom problems JSON
 try:
-    plant_problems = json.load(open('static/plant_problems.json'))
+    plant_problems_path = os.path.join(BASE_DIR, 'static', 'plant_problems.json')
+    plant_problems = json.load(open(plant_problems_path))
 except Exception as e:
     print(f"Warning: Failed to load plant_problems.json: {e}")
     plant_problems = {}
@@ -174,13 +192,18 @@ def load_disease_model():
     global disease_model, disease_class_names
     if disease_model is None or disease_class_names is None:
         try:
-            disease_model = load_model('models/plant_disease_model.h5')
-            with open('models/disease_class_names.json', 'r') as f:
+            model_path = os.path.join(BASE_DIR, 'models', 'plant_disease_model.h5')
+            json_path = os.path.join(BASE_DIR, 'models', 'disease_class_names.json')
+            print(f"Loading disease model from: {model_path}")
+            disease_model = load_model(model_path)
+            with open(json_path, 'r') as f:
                 disease_class_indices = json.load(f)
                 disease_class_names = list(disease_class_indices.keys())
             print("Disease model loaded successfully.")
         except Exception as e:
             print(f"Error loading disease model: {e}")
+            import traceback
+            traceback.print_exc()
             disease_model, disease_class_names = None, []
 
 def compute_crop_yields(merged_df, state_name, crop_recs):
@@ -273,20 +296,57 @@ def index(tab):
     regional_popularity_data = []
 
     if tab == 'recommendation':
-        if request.method == 'POST' and 'image' in request.files:
+        if request.method == 'POST':
+            # Get file and state from form
             img_file = request.files.get('image')
             state_name = request.form.get('state')
             selected_state = state_name
-            if not img_file or not img_file.filename or not state_name:
-                error_message = "Please upload a soil image and select your state."
+            
+            # Debug logging for troubleshooting
+            print(f"DEBUG Recommendation: POST received")
+            print(f"DEBUG: Files in request: {list(request.files.keys())}")
+            print(f"DEBUG: img_file exists: {img_file is not None}")
+            if img_file:
+                print(f"DEBUG: img_file.filename: {img_file.filename}")
+                print(f"DEBUG: img_file.content_type: {getattr(img_file, 'content_type', 'N/A')}")
+            print(f"DEBUG: state_name: {state_name}")
+            
+            # Validate file upload
+            file_uploaded = False
+            if img_file:
+                filename = getattr(img_file, 'filename', None)
+                if filename and filename.strip():
+                    file_uploaded = True
+            
+            # Validate inputs
+            if not file_uploaded or not state_name:
+                if not file_uploaded and not state_name:
+                    error_message = "Please upload a soil image and select your state."
+                elif not file_uploaded:
+                    error_message = "Please upload a soil image. Make sure to select a file before clicking submit."
+                else:
+                    error_message = "Please select your state."
             else:
-                img_path = os.path.join(app.config['UPLOAD_FOLDER'], img_file.filename)
+                # Generate unique filename to avoid conflicts
+                import uuid
+                file_ext = os.path.splitext(img_file.filename)[1] or '.jpg'
+                unique_filename = f"{uuid.uuid4()}{file_ext}"
+                img_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+                
                 try:
+                    print(f"DEBUG: Saving file to: {img_path}")
                     img_file.save(img_path)
+                    print(f"DEBUG: File saved successfully, size: {os.path.getsize(img_path)} bytes")
+                    
                     predicted_class = predict_soil(img_path)
-                    if '___' in predicted_class:
+                    print(f"DEBUG: Predicted soil type: {predicted_class}")
+                    
+                    if '___' in predicted_class or 'Unknown' in predicted_class:
                         predicted_class = "Alluvial_Soil"
+                    
                     recommendations, error_message = get_recommendations(state_name, predicted_class)
+                    print(f"DEBUG: Got {len(recommendations) if recommendations else 0} recommendations")
+                    
                     if recommendations:
                         result = {
                             'soil_type': predicted_class.replace('_', ' ').title(),
@@ -296,8 +356,13 @@ def index(tab):
                         rec_yield_data = [{'crop': rec['name'].title(), 'state': rec['state_yield'], 'national': rec['national_yield']} for rec in recommendations]
                         seasonal_success_data = compute_seasonal_success(recommendations)
                         regional_popularity_data = compute_regional_popularity(recommendations)
+                    else:
+                        error_message = error_message or "No recommendations found for this soil type and state."
                 except Exception as e:
                     error_message = f"Error processing image: {str(e)}"
+                    print(f"DEBUG: Exception occurred: {str(e)}")
+                    import traceback
+                    traceback.print_exc()
 
     elif tab == 'rainfall':
         if request.method == 'POST':
