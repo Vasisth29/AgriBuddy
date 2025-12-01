@@ -26,7 +26,16 @@ try:
     indices_path = os.path.join(BASE_DIR, 'models', 'class_indices.json')
     print(f"Loading model from: {model_path}")
     print(f"Model file exists: {os.path.exists(model_path)}")
-    soil_model = load_model(model_path)
+    if not os.path.exists(model_path):
+        raise FileNotFoundError(f"Model file not found at: {model_path}")
+    if not os.path.exists(indices_path):
+        raise FileNotFoundError(f"Indices file not found at: {indices_path}")
+    # Try loading with compile=False for TensorFlow 2.20+ compatibility
+    try:
+        soil_model = load_model(model_path, compile=False)
+    except Exception as e1:
+        print(f"Warning: Failed to load with compile=False, trying default: {e1}")
+        soil_model = load_model(model_path)
     print("Soil model loaded successfully.")
     with open(indices_path, 'r') as f:
         soil_class_indices = json.load(f)
@@ -195,7 +204,17 @@ def load_disease_model():
             model_path = os.path.join(BASE_DIR, 'models', 'plant_disease_model.h5')
             json_path = os.path.join(BASE_DIR, 'models', 'disease_class_names.json')
             print(f"Loading disease model from: {model_path}")
-            disease_model = load_model(model_path)
+            print(f"Disease model file exists: {os.path.exists(model_path)}")
+            if not os.path.exists(model_path):
+                raise FileNotFoundError(f"Disease model file not found at: {model_path}")
+            if not os.path.exists(json_path):
+                raise FileNotFoundError(f"Disease class names file not found at: {json_path}")
+            # Try loading with compile=False for TensorFlow 2.20+ compatibility
+            try:
+                disease_model = load_model(model_path, compile=False)
+            except Exception as e1:
+                print(f"Warning: Failed to load with compile=False, trying default: {e1}")
+                disease_model = load_model(model_path)
             with open(json_path, 'r') as f:
                 disease_class_indices = json.load(f)
                 disease_class_names = list(disease_class_indices.keys())
@@ -513,7 +532,7 @@ def predict_soil(img_path):
         img = image.load_img(img_path, target_size=(128, 128))
         img_array = image.img_to_array(img)
         img_array = np.expand_dims(img_array, axis=0) / 255.0
-        prediction = soil_model.predict(img_array)
+        prediction = soil_model.predict(img_array, verbose=0)
         class_idx = np.argmax(prediction[0])
         predicted_class = soil_class_names.get(class_idx, "Unknown Soil")
         return predicted_class
@@ -550,7 +569,7 @@ def predict_disease(img_path):
         leaf_img = cv2.cvtColor(leaf_img, cv2.COLOR_BGR2RGB)
         img_array = image.img_to_array(leaf_img) / 255.0
         img_array = np.expand_dims(img_array, axis=0)
-        prediction = disease_model.predict(img_array)
+        prediction = disease_model.predict(img_array, verbose=0)
         class_idx = np.argmax(prediction[0])
         confidence = np.max(prediction[0])
         if confidence >= 0.3 and class_idx < len(disease_class_names):
