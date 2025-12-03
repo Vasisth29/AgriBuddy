@@ -132,11 +132,16 @@ except Exception as e:
     print(f"Warning: Failed to load merged_crop_data.csv: {e}")
     merged_df = pd.DataFrame()
 
-# Get static files list with absolute path
+# Get static files list with absolute path and create case-insensitive mapping
 static_images_dir = os.path.join(BASE_DIR, 'static', 'crop_images')
 static_files = []
+crop_image_map = {}  # Maps lowercase crop name to actual filename
 if os.path.exists(static_images_dir):
-    static_files = [f.lower() for f in os.listdir(static_images_dir) if f.endswith('.jpg')]
+    actual_files = [f for f in os.listdir(static_images_dir) if f.endswith('.jpg')]
+    static_files = [f.lower() for f in actual_files]
+    # Create mapping: lowercase name -> actual filename
+    for actual_file in actual_files:
+        crop_image_map[actual_file.lower()] = actual_file
     print(f"Found {len(static_files)} crop images in {static_images_dir}")
 else:
     print(f"WARNING: Static images directory not found: {static_images_dir}")
@@ -513,6 +518,7 @@ def index(tab):
         rainfall_error=rainfall_error,
         subdivisions=df['SUBDIVISION'].unique().tolist() if not df.empty else [],
         static_files=static_files,
+        crop_image_map=crop_image_map,
         health_result=health_result,
         health_error=health_error,
         health_image_path=health_image_path,
